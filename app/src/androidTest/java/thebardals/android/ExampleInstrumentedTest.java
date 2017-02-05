@@ -1,4 +1,4 @@
-package thebardals.toyguay_android;
+package thebardals.android;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

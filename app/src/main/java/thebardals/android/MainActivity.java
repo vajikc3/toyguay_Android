@@ -1,4 +1,4 @@
-package thebardals.toyguay_android;
+package thebardals.android;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
