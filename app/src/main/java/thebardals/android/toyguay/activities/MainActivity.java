@@ -1,7 +1,9 @@
-package thebardals.android;
+package thebardals.android.toyguay.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import thebardals.android.toyguay.R;
 
 public class MainActivity extends AppCompatActivity {
 
