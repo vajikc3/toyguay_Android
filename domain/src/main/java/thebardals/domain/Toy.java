@@ -1,6 +1,10 @@
 package thebardals.domain;
 
+import java.util.Date;
+
+import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -9,14 +13,19 @@ import io.realm.annotations.Required;
  */
 
 public class Toy extends RealmObject {
-    @PrimaryKey private long id;
+    @PrimaryKey
+    @Index
+    private long id;
 
     @Required private String name;
     @Required private String description;
     @Required private String state;
     private double price;
     private String imageURL;
-    private long idSeller;
+    private long idUser;
+    private Date createdAt;
+    private Date updatedAt;
+    RealmList<Category> categories = new RealmList<Category>();
 
     public long getId() {
         return id;
@@ -67,10 +76,42 @@ public class Toy extends RealmObject {
     }
 
     public long getIdSeller() {
-        return idSeller;
+        return idUser;
     }
 
     public void setIdSeller(long idSeller) {
-        this.idSeller = idSeller;
+        this.idUser = idUser;
+    }
+
+    public long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(long idUser) {
+        this.idUser = idUser;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public RealmList<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(RealmList<Category> categories) {
+        this.categories = categories;
     }
 }

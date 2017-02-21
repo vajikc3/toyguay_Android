@@ -27,10 +27,12 @@ public class ToyGuayApp extends Application {
         ToyGuayApp.appContext = new WeakReference<Context>(getApplicationContext());
 
         Realm.init(this);
-        RealmConfiguration config = new RealmConfiguration.Builder()
-        .name("toyguay.realm")
-        .build();
-        this.realm = Realm.getInstance(config);
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("toyguay.realm")
+                .schemaVersion(0)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        realm = Realm.getInstance(realmConfiguration);
 
     }
 
