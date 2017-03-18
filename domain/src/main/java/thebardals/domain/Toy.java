@@ -25,7 +25,7 @@ public class Toy extends RealmObject {
     private long idUser;
     private Date createdAt;
     private Date updatedAt;
-    RealmList<Category> categories = new RealmList<Category>();
+    private RealmList<Category> categories = new RealmList<Category>();
 
     public long getId() {
         return id;

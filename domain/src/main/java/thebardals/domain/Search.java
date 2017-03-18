@@ -12,6 +12,11 @@ public class Search extends RealmObject {
     @PrimaryKey
     private long id;
 
+
+    @Required
+    private String query;
+    @Required
+    private String categoryName;
     @Required
     private String toyName;
     @Required
@@ -19,6 +24,22 @@ public class Search extends RealmObject {
     private double toyPrice;
     private long idUser;
     private double radius;
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
     public long getId() {
         return id;

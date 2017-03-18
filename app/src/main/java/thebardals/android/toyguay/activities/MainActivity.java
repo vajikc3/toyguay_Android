@@ -13,11 +13,9 @@ import java.util.Calendar;
 import java.util.UUID;
 
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 import thebardals.android.toyguay.R;
 import thebardals.android.toyguay.ToyGuayApp;
-import thebardals.domain.Category;
 import thebardals.domain.Toy;
 import thebardals.domain.util.RealmDatabaseFileUtil;
 
@@ -34,6 +32,15 @@ public class MainActivity extends AppCompatActivity {
 //        realm.beginTransaction();
 //        realm.deleteAll();
 //        realm.commitTransaction();
+//
+//        Category c1 =  new Category();
+//        c1.setId(1);
+//        c1.setName("Construcciones");
+//        Category c2 = new Category();
+//        c2.setId(2);
+//        c2.setName("Muñecas");
+
+
 
         // get id
         RealmResults<Toy> results = realm.where(Toy.class).findAllSorted("id");
@@ -47,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
 
         for (long i = lastId + 1; i < lastId + 2; i++) {
 
+//        Category c1 =  new Category();
+//        c1.setId(1);
+//        c1.setName("Construcciones");
+//        Category c2 = new Category();
+//        c2.setId(2);
+//        c2.setName("Muñecas");
+
+
             //save Toy
             Toy toy = new Toy();
             toy.setId(i);
@@ -55,13 +70,8 @@ public class MainActivity extends AppCompatActivity {
             toy.setState("toSell");
             toy.setPrice(9.99);
             toy.setCreatedAt(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
-            Category c1 = new Category();
-            c1.setId(1);
-            c1.setName("Construcciones");
-            Category c2 = new Category();
-            c2.setId(2);
-            c2.setName("Muñecas");
-            toy.setCategories(new RealmList<Category>(c1, c2));
+
+//            toy.setCategories(new RealmList<Category>(c1, c2));
 
             realm.copyToRealm(toy);
         }
