@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".ToyGuayApp"
@@ -14,13 +15,18 @@
         android:theme="@style/ToyGuayTheme">
         <activity android:name=".activities.MainActivity">
         </activity>
-        <activity android:name=".activities.SplashScreen" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
-            >
+        <activity
+            android:name=".activities.SplashScreen"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".activities.LoginActivity">
+        </activity>
+        <activity android:name=".activities.SignupActivity">
         </activity>
     </application>
 
