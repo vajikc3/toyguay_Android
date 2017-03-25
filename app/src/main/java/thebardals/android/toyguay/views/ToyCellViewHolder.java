@@ -42,7 +42,7 @@ public class ToyCellViewHolder extends RecyclerView.ViewHolder {
         nameTextView.setText(toy.getName());
         Picasso.with(context.get())
                 .load(toy.getImageURL())
-                .networkPolicy(NetworkPolicy.OFFLINE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(android.R.drawable.ic_dialog_email)
                 .into(imageView);
     }
