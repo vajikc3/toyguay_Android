@@ -19,6 +19,7 @@ import thebardals.domain.Toy;
 public class ToyCellViewHolder extends RecyclerView.ViewHolder {
 
     private TextView nameTextView;
+    private TextView priceTextView;
     private ImageView imageView;
 
     private WeakReference<Context> context;
@@ -32,6 +33,7 @@ public class ToyCellViewHolder extends RecyclerView.ViewHolder {
 
     public void bindViews(View cellToy){
         nameTextView = (TextView) cellToy.findViewById(R.id.cell_toy_name);
+        priceTextView = (TextView) cellToy.findViewById(R.id.cell_toy_price);
         imageView = (ImageView) cellToy.findViewById(R.id.cell_toy_image);
     }
 
@@ -40,6 +42,7 @@ public class ToyCellViewHolder extends RecyclerView.ViewHolder {
             return;
         }
         nameTextView.setText(toy.getName());
+        priceTextView.setText(String.valueOf(toy.getPrice()));
         Picasso.with(context.get())
                 .load(toy.getImageURL())
                 .networkPolicy(NetworkPolicy.NO_CACHE)

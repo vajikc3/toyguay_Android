@@ -38,9 +38,11 @@ public class ToysActivity extends AppCompatActivity {
         Toy toy1 = new Toy();
         toy1.setName("toyPrueba 1");
         toy1.setImageURL("http://www.pediatricblog.es/wp-content/uploads/juguetes2.jpg");
+        toy1.setPrice(99.00);
         Toy toy2 = new Toy();
         toy2.setName("toyPrueba 2");
         toy2.setImageURL("http://www.elpaisdelosjuguetes.es/media/catalog/product/cache/2/image/9df78eab33525d08d6e5fb8d27136e95/9/7/97251_1.jpg");
+        toy1.setPrice(99.00);
         Toys toys = Toys.build();
         toys.add(toy1);
         toys.add(toy2);
