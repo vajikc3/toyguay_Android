@@ -28,6 +28,8 @@
         </activity>
         <activity android:name=".activities.SignupActivity">
         </activity>
+        <activity android:name=".activities.ToysActivity">
+        </activity>
     </application>
 
 </manifest>
