@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_seccion_1"
+            android:icon="@drawable/ic_search_black_48dp"
+            android:title="@string/toys"/>
+        <item
+            android:id="@+id/menu_seccion_2"
+            android:icon="@drawable/ic_search_black_48dp"
+            android:title="@string/map"/>
+        <item
+            android:id="@+id/menu_seccion_3"
+            android:icon="@drawable/ic_search_black_48dp"
+            android:title="@string/notifications"/>
+        <item
+            android:id="@+id/menu_seccion_4"
+            android:icon="@drawable/ic_search_black_48dp"
+            android:title="@string/profile"/>
+    </group>
+</menu>

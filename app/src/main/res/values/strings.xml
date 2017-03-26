@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ToyGuay</string>
+    <string name="notifications">Notificaciones</string>
+    <string name="maps">Mapas</string>
+    <string name="toys">Juguetes</string>
+    <string name="profile">Perfil</string>
+    <string name="map">Mapa</string>
 </resources>
