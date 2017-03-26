@@ -12,13 +12,15 @@ import android.view.ViewGroup;
 
 import thebardals.android.toyguay.R;
 import thebardals.android.toyguay.adapters.ToysAdapter;
-import thebardals.domain.Toys;
+import thebardals.android.toyguay.model.Toy;
+import thebardals.android.toyguay.model.Toys;
 
 public class ToyListFragment extends Fragment {
 
     private Toys toys;
     private RecyclerView toysRecyclerView;
     private ToysAdapter adapter;
+    private ToysAdapter.OnToyClick listener;
 
     @Nullable
     @Override
@@ -38,6 +40,19 @@ public class ToyListFragment extends Fragment {
     public void updateUI(){
         adapter = new ToysAdapter(toys, getActivity());
         toysRecyclerView.setAdapter(adapter);
+
+        adapter.setOnElementClickListener(new ToysAdapter.OnToyClick() {
+            @Override
+            public void clickedOn(Toy toy, int position) {
+                if(ToyListFragment.this.listener != null){
+                    ToyListFragment.this.listener.clickedOn(toy, position);
+                }
+            }
+        });
+    }
+
+    public void setListener(ToysAdapter.OnToyClick listener) {
+        this.listener = listener;
     }
 
 }

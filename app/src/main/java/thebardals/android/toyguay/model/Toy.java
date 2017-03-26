@@ -1,31 +1,25 @@
-package thebardals.domain;
+package thebardals.android.toyguay.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-import io.realm.RealmList;
-import io.realm.RealmObject;
-import io.realm.annotations.Index;
-import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.Required;
 
 /**
- * Created by jacobo on 11/2/17.
+ * AKI --> ¡CUIDADINNNN! No es la clase Toy real. La uso mientras no se quite Realm de la clase "buena" en thebardals.domain
  */
 
-public class Toy extends RealmObject {
-    @PrimaryKey
-    @Index
+public class Toy implements Serializable {
     private long id;
 
-    @Required private String name;
-    @Required private String description;
-    @Required private String state;
+    private String name;
+    private String description;
+    private String state;
     private double price;
     private String imageURL;
     private long idUser;
     private Date createdAt;
     private Date updatedAt;
-    private RealmList<Category> categories = new RealmList<Category>();
+    //private List<Category> categories = new RealmList<Category>();
 
 
     public long getId() {
@@ -106,14 +100,6 @@ public class Toy extends RealmObject {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public RealmList<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(RealmList<Category> categories) {
-        this.categories = categories;
     }
 
 }

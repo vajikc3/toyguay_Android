@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.lang.ref.WeakReference;
 
 import thebardals.android.toyguay.R;
-import thebardals.domain.Toy;
+import thebardals.android.toyguay.model.Toy;
 
 public class ToyCellViewHolder extends RecyclerView.ViewHolder {
 

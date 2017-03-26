@@ -10,9 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import thebardals.android.toyguay.R;
+import thebardals.android.toyguay.adapters.ToysAdapter;
 import thebardals.android.toyguay.fragments.ToyListFragment;
-import thebardals.domain.Toy;
-import thebardals.domain.Toys;
+import thebardals.android.toyguay.navigator.Navigator;
+import thebardals.android.toyguay.model.Toy;
+import thebardals.android.toyguay.model.Toys;
 
 public class ToysActivity extends AppCompatActivity {
     private ToyListFragment toyListFragment;
@@ -53,9 +55,15 @@ public class ToysActivity extends AppCompatActivity {
         toys.add(toy1);
         toys.add(toy2);
 
+
+        toyListFragment.setListener(new ToysAdapter.OnToyClick() {
+            @Override
+            public void clickedOn(Toy toy, int position) {
+                goToToyDetail(toy);
+            }
+        });
+
         toyListFragment.setToys(toys);
-
-
     }
 
     @Override
@@ -73,9 +81,13 @@ public class ToysActivity extends AppCompatActivity {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            //...
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void goToToyDetail(Toy toy) {
+        Navigator.navigateFromToysActivityToToyDetailActivity(ToysActivity.this, toy);
     }
 }
