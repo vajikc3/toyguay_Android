@@ -30,7 +30,7 @@ public class ToysActivity extends AppCompatActivity {
     }
 
     private void setToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_toys_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.toys);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
