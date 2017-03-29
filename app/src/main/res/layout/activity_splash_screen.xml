@@ -9,13 +9,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#ffbe00"
     tools:context="thebardals.android.toyguay.activities.SplashScreen">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/app_name"
-        android:scaleType="fitXY"
+        android:scaleType="center"
         android:src="@drawable/splash_screen"
         />
 
