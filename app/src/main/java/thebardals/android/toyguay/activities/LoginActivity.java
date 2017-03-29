@@ -2,17 +2,18 @@ package thebardals.android.toyguay.activities;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.ButterKnife;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import thebardals.android.toyguay.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -80,7 +81,24 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        // TODO: Implement your own authentication logic here.
+        /*
+        new GetTokenInteractor().execute(getApplicationContext(), null, email, password, new GetTokenInteractor.GetTokenInteractorResponse() {
+            @Override
+            public void response(String token) {
+                if (token!=null){
+                    Log.d(TAG,"Auth Valid Token "+token);
+                    onLoginSuccess();
+                    // onLoginFailed();
+
+                }
+                else{
+                    Log.d(TAG,"Auth FAIL!!");
+                    onLoginFailed();
+                }
+                progressDialog.dismiss();
+            }
+        });
+        */
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -91,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 }, 3000);
+
     }
 
 
