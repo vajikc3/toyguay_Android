@@ -13,6 +13,7 @@ public class Constants {
     public static final String USER="user";
     public static final String PASS="password";
     public static final String EMAIL="email";
+    public static final String TOYS="toys";
 
 
 }
