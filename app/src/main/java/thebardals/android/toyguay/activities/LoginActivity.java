@@ -15,10 +15,14 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import thebardals.android.toyguay.R;
+import thebardals.android.toyguay.model.IAuthenticate;
+import thebardals.android.toyguay.model.Token;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+    private Token token;
+
 
     @BindView(R.id.input_email) EditText _emailText;
     @BindView(R.id.input_password) EditText _passwordText;
@@ -31,6 +35,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        token = new Token(getApplicationContext());
+        if (token.getUser()!=null) {
+            _emailText.setText(token.getUser());
+
+            if (token.getPassword() != null) {
+                _passwordText.setText(token.getPassword());
+                login();
+            }
+
+        }
+
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -63,6 +78,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login() {
+
+
         Log.d(TAG, "Login");
 
         if (!validate()) {
@@ -81,12 +98,28 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
+        token.setUser(email);
+        token.setPassword(password);
+
+        token.getTokenFromServer(new IAuthenticate.DownloadTokenFromServer() {
+            @Override
+            public void getTokenSucess(String token) {
+                onLoginSuccess();
+            }
+
+            @Override
+            public void getTokenError() {
+                onLoginFailed();
+            }
+        });
+
         /*
         new GetTokenInteractor().execute(getApplicationContext(), null, email, password, new GetTokenInteractor.GetTokenInteractorResponse() {
             @Override
             public void response(String token) {
                 if (token!=null){
                     Log.d(TAG,"Auth Valid Token "+token);
+                    LoginActivity.this.token.setToken(token);
                     onLoginSuccess();
                     // onLoginFailed();
 
@@ -94,12 +127,15 @@ public class LoginActivity extends AppCompatActivity {
                 else{
                     Log.d(TAG,"Auth FAIL!!");
                     onLoginFailed();
+                    LoginActivity.this.token.setPassword(null);
+                    LoginActivity.this.token.setToken(null);
+                    LoginActivity.this.token.saveUserPass();
                 }
                 progressDialog.dismiss();
             }
         });
         */
-
+        /*
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
@@ -109,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 }, 3000);
-
+        */
     }
 
 
@@ -133,6 +169,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
+        token.setPassword(_passwordText.getText().toString());
+        token.setUser(_emailText.getText().toString());
+        token.saveUserPass();
         finish();
     }
 

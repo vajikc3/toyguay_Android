@@ -15,12 +15,12 @@ public class ToyEntity {
     @SerializedName("state") private String state;
     @SerializedName("udatedAt") private Date updatedAt;
     @SerializedName("createdAt") private Date createdAt;
-
-
-
     @SerializedName("description") private String description;
+    @SerializedName("seller") private UserEntity seller;
 
-
+    public UserEntity getSeller() {
+        return seller;
+    }
 
     public String getId() {
         return id;
