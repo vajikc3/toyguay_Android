@@ -44,7 +44,7 @@ public class ToyCellViewHolder extends RecyclerView.ViewHolder {
         nameTextView.setText(toy.getName());
         priceTextView.setText(String.valueOf(toy.getPrice()));
         Picasso.with(context.get())
-                .load(toy.getImageURL())
+                .load(toy.getImageURL().get(0))
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(android.R.drawable.ic_dialog_email)
                 .into(imageView);

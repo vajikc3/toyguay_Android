@@ -12,9 +12,10 @@ import android.view.MenuItem;
 import thebardals.android.toyguay.R;
 import thebardals.android.toyguay.adapters.ToysAdapter;
 import thebardals.android.toyguay.fragments.ToyListFragment;
-import thebardals.android.toyguay.navigator.Navigator;
+import thebardals.android.toyguay.interactor.GetAllToysInteractor;
 import thebardals.android.toyguay.model.Toy;
 import thebardals.android.toyguay.model.Toys;
+import thebardals.android.toyguay.navigator.Navigator;
 
 public class ToysActivity extends AppCompatActivity {
     private ToyListFragment toyListFragment;
@@ -43,6 +44,7 @@ public class ToysActivity extends AppCompatActivity {
     }
 
     private void loadToys(){
+        /*
         Toy toy1 = new Toy();
         toy1.setName("toyPrueba 1");
         toy1.setImageURL("http://www.pediatricblog.es/wp-content/uploads/juguetes2.jpg");
@@ -54,16 +56,21 @@ public class ToysActivity extends AppCompatActivity {
         Toys toys = Toys.build();
         toys.add(toy1);
         toys.add(toy2);
-
-
-        toyListFragment.setListener(new ToysAdapter.OnToyClick() {
+        */
+        new GetAllToysInteractor().execute(getApplicationContext(), new GetAllToysInteractor.GetAllToysInteractorResponse() {
             @Override
-            public void clickedOn(Toy toy, int position) {
-                goToToyDetail(toy);
+            public void response(Toys toys) {
+                toyListFragment.setListener(new ToysAdapter.OnToyClick() {
+                    @Override
+                    public void clickedOn(Toy toy, int position) {
+                        goToToyDetail(toy);
+                    }
+                });
+                toyListFragment.setToys(toys);
             }
         });
 
-        toyListFragment.setToys(toys);
+
     }
 
     @Override

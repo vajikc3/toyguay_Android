@@ -70,7 +70,7 @@ public class ToyDetailActivity extends AppCompatActivity {
         toyNameText.setText(toy.getName());
         toyDescriptionText.setText(toy.getDescription());
         Picasso.with(this)
-                .load(toy.getImageURL())
+                .load(toy.getImageURL().get(0))
                 .into(toyImage);
     }
 

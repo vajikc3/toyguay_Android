@@ -2,6 +2,7 @@ package thebardals.android.toyguay.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -9,24 +10,34 @@ import java.util.Date;
  */
 
 public class Toy implements Serializable {
-    private long id;
+    private String id;
 
     private String name;
     private String description;
     private String state;
     private double price;
-    private String imageURL;
+    private List<String> imageURL;
     private long idUser;
     private Date createdAt;
     private Date updatedAt;
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
+    private List<String> categories;
     //private List<Category> categories = new RealmList<Category>();
 
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -62,11 +73,11 @@ public class Toy implements Serializable {
         this.price = price;
     }
 
-    public String getImageURL() {
+    public List<String> getImageURL() {
         return imageURL;
     }
 
-    public void setImageURL(String imageURL) {
+    public void setImageURL(List<String> imageURL) {
         this.imageURL = imageURL;
     }
 

@@ -18,6 +18,10 @@ public class ToyEntity {
 
 
 
+    @SerializedName("description") private String description;
+
+
+
     public String getId() {
         return id;
     }
@@ -40,5 +44,8 @@ public class ToyEntity {
 
     public String getState() {
         return state;
+    }
+    public String getDescription() {
+        return description;
     }
 }
