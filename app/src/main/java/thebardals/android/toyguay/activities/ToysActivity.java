@@ -40,7 +40,7 @@ public class ToysActivity extends AppCompatActivity {
 
     private void setToyListFragment() {
         toyListFragment = (ToyListFragment) this.getSupportFragmentManager().findFragmentById(R.id.activity_toys_frag_toy_list);
-        loadToys();
+         loadToys();
     }
 
     private void loadToys(){

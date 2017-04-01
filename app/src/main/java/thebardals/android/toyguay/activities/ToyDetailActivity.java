@@ -69,8 +69,12 @@ public class ToyDetailActivity extends AppCompatActivity {
         toyPriceText.setText(String.valueOf(toy.getPrice()) + "€");
         toyNameText.setText(toy.getName());
         toyDescriptionText.setText(toy.getDescription());
+        String imageURL = Constants.ALTERNATIVE_NO_IMAGE;
+        if (!toy.getImageURL().isEmpty()) {
+            imageURL = toy.getImageURL().get(0);
+        }
         Picasso.with(this)
-                .load(toy.getImageURL().get(0))
+                .load(imageURL)
                 .into(toyImage);
     }
 

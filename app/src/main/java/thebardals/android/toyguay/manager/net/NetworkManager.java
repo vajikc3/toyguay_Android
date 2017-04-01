@@ -2,6 +2,7 @@ package thebardals.android.toyguay.manager.net;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;

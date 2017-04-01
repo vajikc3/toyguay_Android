@@ -15,6 +15,7 @@ import java.lang.ref.WeakReference;
 
 import thebardals.android.toyguay.R;
 import thebardals.android.toyguay.model.Toy;
+import thebardals.android.toyguay.util.Constants;
 
 public class ToyCellViewHolder extends RecyclerView.ViewHolder {
 
@@ -43,10 +44,15 @@ public class ToyCellViewHolder extends RecyclerView.ViewHolder {
         }
         nameTextView.setText(toy.getName());
         priceTextView.setText(String.valueOf(toy.getPrice()));
+        String imageURL = Constants.ALTERNATIVE_NO_IMAGE;
+        if (!toy.getImageURL().isEmpty()) {
+            imageURL = toy.getImageURL().get(0);
+        }
         Picasso.with(context.get())
-                .load(toy.getImageURL().get(0))
-                .networkPolicy(NetworkPolicy.NO_CACHE)
-                .placeholder(android.R.drawable.ic_dialog_email)
+                .load(imageURL)
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                .placeholder(R.drawable.noimage)
                 .into(imageView);
+
     }
 }
