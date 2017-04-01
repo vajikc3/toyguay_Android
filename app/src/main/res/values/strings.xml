@@ -6,4 +6,5 @@
     <string name="profile">Perfil</string>
     <string name="map">Mapa</string>
     <string name="toy_detail">Detalle de Juguete</string>
+    <string name="search_toys">Buscar juguetes</string>
 </resources>

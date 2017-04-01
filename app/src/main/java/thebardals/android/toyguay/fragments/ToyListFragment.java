@@ -18,6 +18,7 @@ import thebardals.android.toyguay.model.Toys;
 public class ToyListFragment extends Fragment {
 
     private Toys toys;
+    private Toys filteredToys;
     private RecyclerView toysRecyclerView;
     private ToysAdapter adapter;
     private ToysAdapter.OnToyClick listener;
@@ -34,11 +35,12 @@ public class ToyListFragment extends Fragment {
 
     public void setToys(Toys toys){
         this.toys = toys;
+        this.filteredToys = toys;
         updateUI();
     }
 
     public void updateUI(){
-        adapter = new ToysAdapter(toys, getActivity());
+        adapter = new ToysAdapter(filteredToys, getActivity());
         toysRecyclerView.setAdapter(adapter);
 
         adapter.setOnElementClickListener(new ToysAdapter.OnToyClick() {
@@ -50,6 +52,17 @@ public class ToyListFragment extends Fragment {
             }
         });
     }
+
+    public void filter(String query) {
+        if(!query.isEmpty()) {
+            this.filteredToys = toys.filter(query);
+        } else {
+            this.filteredToys= toys;
+        }
+
+        updateUI();
+    }
+
 
     public void setListener(ToysAdapter.OnToyClick listener) {
         this.listener = listener;

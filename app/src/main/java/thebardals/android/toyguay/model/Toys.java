@@ -53,4 +53,15 @@ public class Toys {
         toys.set((int)index, newToy);
     }
 
+    public Toys filter(String query) {
+        List<Toy> filteredShopList = new ArrayList<>();
+
+        for (Toy toy: toys) {
+            if (toy.getName().toLowerCase().contains(query.toLowerCase())) {
+                filteredShopList.add(toy);
+            }
+        }
+        return Toys.build(filteredShopList);
+    }
+
 }

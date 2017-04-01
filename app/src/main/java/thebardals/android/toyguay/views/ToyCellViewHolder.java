@@ -50,7 +50,7 @@ public class ToyCellViewHolder extends RecyclerView.ViewHolder {
         }
         Picasso.with(context.get())
                 .load(imageURL)
-                .networkPolicy(NetworkPolicy.OFFLINE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.drawable.noimage)
                 .into(imageView);
 
