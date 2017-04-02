@@ -7,4 +7,24 @@
     <string name="map">Mapa</string>
     <string name="toy_detail">Detalle de Juguete</string>
     <string name="search_toys">Buscar juguetes</string>
+    <string name="filter">Filtro</string>
+    <string name="activity_toys_action_search">Buscar</string>
+    <string name="without_filter">Sin filtro</string>
+    <string name="dolls">Muñecas</string>
+    <string name="kids">Niñ@s</string>
+    <string name="constructions">Construcciones</string>
+    <string name="sports">Deportes</string>
+    <string name="home">Casa</string>
+    <string name="category_filter">Filtro de categoría:</string>
+    <string name="distance_filter">Filtro de distancia</string>
+    <string name="_1km">1Km</string>
+    <string name="_10km">10km</string>
+    <string name="_30km">30km</string>
+    <string-array name="categories">
+        <item>sports</item>
+        <item>dolls</item>
+        <item>kids</item>
+        <item>builds</item>
+        <item>home</item>
+    </string-array>
 </resources>

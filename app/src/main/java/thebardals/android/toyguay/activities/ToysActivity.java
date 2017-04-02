@@ -1,14 +1,22 @@
 package thebardals.android.toyguay.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import thebardals.android.toyguay.R;
 import thebardals.android.toyguay.adapters.ToysAdapter;
@@ -20,6 +28,8 @@ import thebardals.android.toyguay.navigator.Navigator;
 
 public class ToysActivity extends AppCompatActivity {
     private ToyListFragment toyListFragment;
+    private String filterQuery = "";
+    private String filterCategory = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,13 +95,15 @@ public class ToysActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                toyListFragment.filter(query);
+                filterQuery = query;
+                toyListFragment.filter(filterQuery, filterCategory);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
-                toyListFragment.filter(query);
+                filterQuery = query;
+                toyListFragment.filter(filterQuery, filterCategory);
                 return true;
             }
         });
@@ -106,9 +118,51 @@ public class ToysActivity extends AppCompatActivity {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            case R.id.activity_toys_action_filter:
+                showFilterDialog();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+    public void showFilterDialog() {
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title("Filtro")
+                .customView(R.layout.dialog_filter_toys, true)
+                .positiveText("Aplicar Filtro")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        RadioGroup selectCategory = (RadioGroup) dialog.getCustomView().findViewById(R.id.dialog_filter_category_selector);
+                        RadioButton selectedCategory= (RadioButton) dialog.getCustomView().findViewById(selectCategory.getCheckedRadioButtonId());
+                        filterCategory = selectedCategory.getTag().toString();
+                        toyListFragment.filter(filterQuery, filterCategory);
+                        Log.d("AOA", "selected categ " + filterCategory);
+
+                        RadioGroup selectDistance = (RadioGroup) dialog.getCustomView().findViewById(R.id.dialog_filter_distance_selector);
+                        int selDistance = selectDistance.getCheckedRadioButtonId();
+                        Log.d("AOA", "selected Distance" + selDistance);
+                    }
+                })
+                .build();
+        RadioGroup selectCategory = (RadioGroup) dialog.getCustomView().findViewById(R.id.dialog_filter_category_selector);
+        int count = selectCategory.getChildCount();
+        for (int i=0;i<count;i++) {
+            View o = selectCategory.getChildAt(i);
+            Log.d("AOA", "iterate " + o.toString());
+            if (o instanceof RadioButton) {
+                Log.d("AOA", "tag " + o.getTag() + " =? filtercat " + filterCategory);
+                if (o.getTag().toString().equals(filterCategory)){
+                    ((RadioButton) o).setChecked(true);
+                    Log.d("AOA", "found " + o.toString());
+                }
+            }
+        }
+
+        dialog.show();
     }
 
     private void goToToyDetail(Toy toy) {

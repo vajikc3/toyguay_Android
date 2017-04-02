@@ -53,11 +53,11 @@ public class ToyListFragment extends Fragment {
         });
     }
 
-    public void filter(String query) {
-        if(!query.isEmpty()) {
-            this.filteredToys = toys.filter(query);
-        } else {
+    public void filter(String query, String category) {
+        if(query.isEmpty() && category.isEmpty()) {
             this.filteredToys= toys;
+        } else {
+            this.filteredToys = toys.filter(query, category);
         }
 
         updateUI();

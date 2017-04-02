@@ -1,6 +1,7 @@
 package thebardals.android.toyguay.model;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,15 +54,20 @@ public class Toys {
         toys.set((int)index, newToy);
     }
 
-    public Toys filter(String query) {
-        List<Toy> filteredShopList = new ArrayList<>();
+    public Toys filter(String query, String category) {
+        List<Toy> filteredToyList = new ArrayList<>();
 
         for (Toy toy: toys) {
-            if (toy.getName().toLowerCase().contains(query.toLowerCase())) {
-                filteredShopList.add(toy);
+            Boolean cond1 = query.isEmpty() || toy.getName().toLowerCase().contains(query.toLowerCase());
+            Log.d("AOA", "cond1 " + cond1);
+            Boolean cond2 = category.isEmpty() || toy.getCategories().contains(category);
+            Log.d("AOA", toy.getCategories().toString() + " " + toy.getCategories().contains(category));
+            if (cond1 && cond2) {
+                filteredToyList.add(toy);
             }
         }
-        return Toys.build(filteredShopList);
+        Log.d("AOA", filteredToyList.toString());
+        return Toys.build(filteredToyList );
     }
 
 }
