@@ -3,6 +3,7 @@ package thebardals.android.toyguay.activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -37,11 +38,21 @@ public class ToysActivity extends AppCompatActivity {
         setContentView(R.layout.activity_toys);
 
         setToolbar();
+        setActionButton();
 
         setToyListFragment();
 
     }
 
+    private void setActionButton(){
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigator.navigateFromToysActivityToToySellActivity(ToysActivity.this);
+            }
+        });
+    }
     private void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_toys_toolbar);
         setSupportActionBar(toolbar);

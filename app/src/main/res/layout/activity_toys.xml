@@ -30,16 +30,29 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-
-
-        <fragment
-            android:id="@+id/activity_toys_frag_toy_list"
-            android:name="thebardals.android.toyguay.fragments.ToyListFragment"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-        />
+            android:layout_height="match_parent">
+            <fragment
+                android:id="@+id/activity_toys_frag_toy_list"
+                android:name="thebardals.android.toyguay.fragments.ToyListFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:backgroundTint="@color/colorSecondary"
+                android:tint="@android:color/white"
+                android:layout_width="@dimen/fab_button_dim"
+                android:layout_height="@dimen/fab_button_dim"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_button_margins"
+                android:src="@drawable/ic_add_black_24dp" />
+        </FrameLayout>
+
     </LinearLayout>
+
     <!-- Layout del menú lateral (Navigation View) -->
     <android.support.design.widget.NavigationView
         android:id="@+id/navview"

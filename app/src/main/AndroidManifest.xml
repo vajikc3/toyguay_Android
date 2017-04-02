@@ -32,6 +32,8 @@
         </activity>
         <activity android:name=".activities.ToyDetailActivity">
         </activity>
+        <activity android:name=".activities.ToySellActivity">
+        </activity>
     </application>
 
 </manifest>

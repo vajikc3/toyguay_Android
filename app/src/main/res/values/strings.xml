@@ -20,6 +20,10 @@
     <string name="_1km">1Km</string>
     <string name="_10km">10km</string>
     <string name="_30km">30km</string>
+    <string name="name">Nombre</string>
+    <string name="description">Descripción</string>
+    <string name="euro_symbol">€</string>
+    <string name="sell">Vender</string>
     <string-array name="categories">
         <item>sports</item>
         <item>dolls</item>
