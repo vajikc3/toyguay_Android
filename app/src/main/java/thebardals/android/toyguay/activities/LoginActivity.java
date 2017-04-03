@@ -172,7 +172,11 @@ public class LoginActivity extends AppCompatActivity {
         token.setPassword(_passwordText.getText().toString());
         token.setUser(_emailText.getText().toString());
         token.saveUserPass();
-        finish();
+        /* finish() */;
+        /*TODO esto deberia hacerse con un Navigator */
+        Intent intent = new Intent(getApplicationContext(), ToysActivity.class);
+        startActivity(intent);
+
     }
 
     public void onLoginFailed() {

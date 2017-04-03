@@ -24,7 +24,16 @@ public class Toy implements Serializable {
     public List<String> getCategories() {
         return categories;
     }
-
+    public String getCategoriesString(){
+        String categoriesComma="";
+        for (String cat: this.categories) {
+            categoriesComma=categoriesComma+cat;
+            if (this.categories.indexOf(cat)!=this.categories.size()-1){
+                categoriesComma = categoriesComma+",";
+            }
+        }
+        return categoriesComma;
+    }
     public void setCategories(List<String> categories) {
         this.categories = categories;
     }

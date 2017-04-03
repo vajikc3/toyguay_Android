@@ -2,7 +2,6 @@ package thebardals.android.toyguay.manager.net;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -21,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import thebardals.android.toyguay.model.Token;
+import thebardals.android.toyguay.model.Toy;
 import thebardals.android.toyguay.util.Constants;
 
 public class NetworkManager {
@@ -32,6 +33,11 @@ public class NetworkManager {
         public void getToysSucess(List<ToyEntity> result);
         public void getToyDidFail();
     }
+    public interface PutToyListener{
+        public void putToySucess();
+        public void putToyDidFail(int errorCode);
+    }
+
 
     private WeakReference<Context> context;
 
@@ -122,6 +128,39 @@ public class NetworkManager {
             ex.printStackTrace();
         }
         return result;
+    }
+
+    public void putToyToServer(final Toy toy,final PutToyListener listener){
+        RequestQueue queue = Volley.newRequestQueue(context.get());
+        String url = Constants.BACKEND_URL+Constants.TOYS;
+        url = url + Constants.GET_TOKEN + Token.token;
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (listener != null){
+                    listener.putToySucess();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (listener != null){
+                    listener.putToyDidFail(error.networkResponse.statusCode);
+                }
+            }
+        }){
+            @Override
+            public Map<String, String> getParams() throws AuthFailureError {
+                Map <String,String> params = new HashMap<String, String>();
+                params.put(Constants.TOY_NAME,toy.getName());
+                params.put(Constants.TOY_DESCRIPTION,toy.getDescription());
+                params.put(Constants.TOY_PRICE,""+toy.getPrice());
+                params.put(Constants.TOY_CATEGORIES,toy.getCategoriesString());
+                return params;
+            }
+        };
+        queue.add(request);
+
     }
 
 }
