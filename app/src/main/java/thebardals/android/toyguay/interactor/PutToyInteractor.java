@@ -12,14 +12,15 @@ import thebardals.android.toyguay.util.Constants;
 public class PutToyInteractor {
     public interface PutToyInteractorResponse{
         public void response(int error);
+        public void data(String id);
     }
     public void execute(final Context context, final Toy toy,final PutToyInteractorResponse response){
         NetworkManager networkManager = new NetworkManager(context);
         networkManager.putToyToServer(toy, new NetworkManager.PutToyListener() {
             @Override
-            public void putToySucess() {
+            public void putToySucess(String id) {
                 if (response != null){
-                    response.response(Constants.POST_TOY_OK);
+                    response.data(id);
                 }
             }
             @Override
@@ -34,6 +35,13 @@ public class PutToyInteractor {
                                 public void response(int error) {
                                     if (response!=null){
                                         response.response(error);
+                                    }
+                                }
+
+                                @Override
+                                public void data(String id) {
+                                    if (response!=null){
+                                        response.data(id);
                                     }
                                 }
                             });

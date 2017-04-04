@@ -34,8 +34,12 @@ public class NetworkManager {
         public void getToyDidFail();
     }
     public interface PutToyListener{
-        public void putToySucess();
+        public void putToySucess(String toyId);
         public void putToyDidFail(int errorCode);
+    }
+    public interface PutImageToyListener{
+        public void putImageToySucess();
+        public void putImageToyFail(int erroCode);
     }
 
 
@@ -138,7 +142,8 @@ public class NetworkManager {
             @Override
             public void onResponse(String response) {
                 if (listener != null){
-                    listener.putToySucess();
+                    ToyEntity toyEntity = parseResponsePostToy(response);
+                    listener.putToySucess(toyEntity.getId());
                 }
             }
         }, new Response.ErrorListener() {
@@ -160,7 +165,50 @@ public class NetworkManager {
             }
         };
         queue.add(request);
-
     }
+    private ToyEntity parseResponsePostToy(String response){
+        ToyEntity result = null;
+        try{
+            Reader reader = new StringReader(response);
+            Gson gson = new GsonBuilder().create();
+            ToyPostResponse toyResponse = gson.fromJson(reader,ToyPostResponse.class);
+            result = toyResponse.getToy();
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
+    public void putToyImageToServer(final String toyId,final String urlImage, final PutImageToyListener listener){
+        RequestQueue queue = Volley.newRequestQueue(context.get());
+        String url = Constants.BACKEND_URL+Constants.IMAGES;
+        url = url + Constants.GET_TOKEN + Token.token;
+        StringRequest request = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (listener != null){
+                    listener.putImageToySucess();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (listener != null){
+                    listener.putImageToyFail(error.networkResponse.statusCode);
+                }
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put(Constants.IMAGE_URL,urlImage);
+                params.put(Constants.IMAGE_TOY_ID,toyId);
+                return params;
+            }
+        };
+        queue.add(request);
+    }
+
 
 }

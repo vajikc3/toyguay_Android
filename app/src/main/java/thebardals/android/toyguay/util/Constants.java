@@ -5,6 +5,9 @@ package thebardals.android.toyguay.util;
  */
 
 public class Constants {
+    public static final String IMAGES = "images" ;
+    public static final String IMAGE_URL = "url";
+    public static final String IMAGE_TOY_ID = "toyid";
     public static String appName = "thebardals.android.toyguay";
     public static final String INTENT_KEY_TOY_DETAIL = appName + ".INTENT_KEY_TOY_DETAIL";
     // Backend data
