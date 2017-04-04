@@ -1,5 +1,6 @@
 package thebardals.android.toyguay.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,19 +67,6 @@ public class ToysActivity extends AppCompatActivity {
     }
 
     private void loadToys(){
-        /*
-        Toy toy1 = new Toy();
-        toy1.setName("toyPrueba 1");
-        toy1.setImageURL("http://www.pediatricblog.es/wp-content/uploads/juguetes2.jpg");
-        toy1.setPrice(99.00);
-        Toy toy2 = new Toy();
-        toy2.setName("toyPrueba 2");
-        toy2.setImageURL("http://www.elpaisdelosjuguetes.es/media/catalog/product/cache/2/image/9df78eab33525d08d6e5fb8d27136e95/9/7/97251_1.jpg");
-        toy1.setPrice(99.00);
-        Toys toys = Toys.build();
-        toys.add(toy1);
-        toys.add(toy2);
-        */
         new GetAllToysInteractor().execute(getApplicationContext(), new GetAllToysInteractor.GetAllToysInteractorResponse() {
             @Override
             public void response(Toys toys) {
@@ -151,11 +138,9 @@ public class ToysActivity extends AppCompatActivity {
                         RadioButton selectedCategory= (RadioButton) dialog.getCustomView().findViewById(selectCategory.getCheckedRadioButtonId());
                         filterCategory = selectedCategory.getTag().toString();
                         toyListFragment.filter(filterQuery, filterCategory);
-                        Log.d("AOA", "selected categ " + filterCategory);
 
                         RadioGroup selectDistance = (RadioGroup) dialog.getCustomView().findViewById(R.id.dialog_filter_distance_selector);
                         int selDistance = selectDistance.getCheckedRadioButtonId();
-                        Log.d("AOA", "selected Distance" + selDistance);
                     }
                 })
                 .build();
@@ -163,20 +148,25 @@ public class ToysActivity extends AppCompatActivity {
         int count = selectCategory.getChildCount();
         for (int i=0;i<count;i++) {
             View o = selectCategory.getChildAt(i);
-            Log.d("AOA", "iterate " + o.toString());
             if (o instanceof RadioButton) {
-                Log.d("AOA", "tag " + o.getTag() + " =? filtercat " + filterCategory);
                 if (o.getTag().toString().equals(filterCategory)){
                     ((RadioButton) o).setChecked(true);
-                    Log.d("AOA", "found " + o.toString());
                 }
             }
         }
-
         dialog.show();
     }
 
     private void goToToyDetail(Toy toy) {
         Navigator.navigateFromToysActivityToToyDetailActivity(ToysActivity.this, toy);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            loadToys();
+        }
+
     }
 }

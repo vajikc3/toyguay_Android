@@ -74,11 +74,12 @@
             android:layout_height="wrap_content"
             android:gravity="center">
             <ImageButton
+                android:id="@+id/activity_toy_sell_image1"
                 android:layout_margin="2dp"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/noimage"
-                android:scaleType="center"
+                android:scaleType="centerCrop"
                 />
             <ImageButton
                 android:layout_margin="2dp"

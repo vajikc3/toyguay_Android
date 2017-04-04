@@ -21,7 +21,7 @@ public class Navigator {
 
     public static Intent navigateFromToysActivityToToySellActivity(final ToysActivity toysActivity) {
         final Intent i = new Intent(toysActivity, ToySellActivity.class);
-        toysActivity.startActivity(i);
+        toysActivity.startActivityForResult(i,1);
         return i;
     }
 
