@@ -29,4 +29,8 @@ public class Constants {
     public static final int POST_TOY_OK = 0;
     public static final int POST_TOY_ERROR_AUTH=403;
 
+    public static final String AZURE_CONTAINER_NAME = "toyguay-image-container";
+    public static final String AZURE_STORAGE_CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=toyguay;AccountKey=shwGPxWpIVvnxkcVmRz1p8JqOlcG7YXMpnXULTM8bsdT+kLe9dBuzQi2K+XnVCittjLf7/lWJfQj5FtyAlChOQ==;EndpointSuffix=core.windows.net";
+    public static final String AZURE_URL_BASE = "https://toyguay.blob.core.windows.net/toyguay-image-container/";
+
 }

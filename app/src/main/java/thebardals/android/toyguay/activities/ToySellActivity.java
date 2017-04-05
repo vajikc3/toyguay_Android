@@ -38,9 +38,11 @@ import thebardals.android.toyguay.interactor.PutToyInteractor;
 import thebardals.android.toyguay.model.Toy;
 import thebardals.android.toyguay.util.Constants;
 
+import static thebardals.android.toyguay.util.Constants.AZURE_URL_BASE;
+
 public class ToySellActivity  extends AppCompatActivity implements FileChooserDialog.FileCallback {
 
-    public static final String storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=toyguay;AccountKey=shwGPxWpIVvnxkcVmRz1p8JqOlcG7YXMpnXULTM8bsdT+kLe9dBuzQi2K+XnVCittjLf7/lWJfQj5FtyAlChOQ==;EndpointSuffix=core.windows.net";
+
     private Toy toy;
     private File file;
     @BindView(R.id.toy_sell_button)
@@ -161,41 +163,28 @@ public class ToySellActivity  extends AppCompatActivity implements FileChooserDi
     }
 
     @Override
-    public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File f) {
-        final File file = f;
+    public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file) {
 
-            @Override
-            public void run() {
-                Log.d("AOA", file.getName());
-                Bitmap bmp = BitmapFactory.decodeFile(file.getPath());
-                _image1.setImageBitmap(bmp);
+
                 try
                 {
-                    // Retrieve storage account from connection-string.
-                    CloudStorageAccount storageAccount = CloudStorageAccount.parse(storageConnectionString);
+                    CloudStorageAccount storageAccount = CloudStorageAccount.parse(Constants.AZURE_STORAGE_CONNECTION_STRING);
 
-                    // Create the blob client.
                     CloudBlobClient blobClient = storageAccount.createCloudBlobClient();
+                    CloudBlobContainer container = blobClient.getContainerReference(Constants.AZURE_CONTAINER_NAME);
 
-                    // Get a reference to a container.
-                    // The container name must be lower case
-                    CloudBlobContainer container = blobClient.getContainerReference("toyguay-image-container");
-
-
-                    // Create a permissions object.
                     BlobContainerPermissions containerPermissions = new BlobContainerPermissions();
-
-                    // Include public access in the permissions object.
                     containerPermissions.setPublicAccess(BlobContainerPublicAccessType.BLOB);
-
-                    // Set the permissions on the container.
                     container.uploadPermissions(containerPermissions);
 
-                    // Create or overwrite the "myimage.jpg" blob with contents from a local file.
                     String uniqueID = UUID.randomUUID().toString() + ".jpg";
                     CloudBlockBlob blob = container.getBlockBlobReference(uniqueID);
 
-                    blob.upload(new FileInputStream(file), file.length());toy.getImageURL().add("https://toyguay.blob.core.windows.net/toyguay-image-container/" + uniqueID);
+                    blob.upload(new FileInputStream(file), file.length());toy.getImageURL().add(AZURE_URL_BASE + uniqueID);
+
+                    // After loading blot to Azure we can fill ImageButton with selected image
+                    Bitmap bmp = BitmapFactory.decodeFile(file.getPath());
+                    _image1.setImageBitmap(bmp);
                 }
                 catch (Exception e)
                 {
