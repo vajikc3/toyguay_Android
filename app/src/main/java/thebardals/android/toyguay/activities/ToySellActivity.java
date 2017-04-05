@@ -1,6 +1,5 @@
 package thebardals.android.toyguay.activities;
 
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -18,20 +17,32 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
+import com.microsoft.azure.storage.CloudStorageAccount;
+import com.microsoft.azure.storage.blob.BlobContainerPermissions;
+import com.microsoft.azure.storage.blob.BlobContainerPublicAccessType;
+import com.microsoft.azure.storage.blob.CloudBlobClient;
+import com.microsoft.azure.storage.blob.CloudBlobContainer;
+import com.microsoft.azure.storage.blob.CloudBlockBlob;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import thebardals.android.toyguay.R;
+import thebardals.android.toyguay.interactor.PutImageToyInteractor;
 import thebardals.android.toyguay.interactor.PutToyInteractor;
 import thebardals.android.toyguay.model.Toy;
 import thebardals.android.toyguay.util.Constants;
 
 public class ToySellActivity  extends AppCompatActivity implements FileChooserDialog.FileCallback {
 
+    public static final String storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=toyguay;AccountKey=shwGPxWpIVvnxkcVmRz1p8JqOlcG7YXMpnXULTM8bsdT+kLe9dBuzQi2K+XnVCittjLf7/lWJfQj5FtyAlChOQ==;EndpointSuffix=core.windows.net";
+    private Toy toy;
+    private File file;
     @BindView(R.id.toy_sell_button)
     Button _sellButton;
 
@@ -88,7 +99,7 @@ public class ToySellActivity  extends AppCompatActivity implements FileChooserDi
             @Override
             public void onClick(View view) {
                 /* Test Toy sell */
-                Toy toy = new Toy();
+                toy = new Toy();
                 toy.setName(_name.getText().toString());
                 toy.setDescription(_description.getText().toString());
                 toy.setPrice(Double.parseDouble(_price.getText().toString()));
@@ -101,8 +112,7 @@ public class ToySellActivity  extends AppCompatActivity implements FileChooserDi
                     public void response(int error) {
                         if (error == Constants.POST_TOY_OK) {
                             /* TODO Mensajito de todo bien */
-                            setResult(RESULT_OK, null);
-                            finish();
+
                         }
                         if (error== Constants.POST_TOY_ERROR_AUTH){
                             /* TODO Saltar a actividad de LOGIN pq el token está caducado */
@@ -110,6 +120,24 @@ public class ToySellActivity  extends AppCompatActivity implements FileChooserDi
                         else{
                             /* TODO El error es otro, tema de parámetros */
                         }
+                    }
+
+                    @Override
+                    public void data(String id) {
+                        Log.d("AOA", id);
+                        toy.setId(id);
+                        new PutImageToyInteractor().execute(getApplicationContext(), toy.getImageURL().get(0), id, new PutImageToyInteractor.PutImageToyInteractorResponse() {
+                            @Override
+                            public void PutImageDidFail(int error) {
+
+                            }
+
+                            @Override
+                            public void PutImageSucess() {
+                                setResult(RESULT_OK);
+                                finish();
+                            }
+                        });
                     }
                 });
             }
@@ -133,10 +161,48 @@ public class ToySellActivity  extends AppCompatActivity implements FileChooserDi
     }
 
     @Override
-    public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file) {
-        Log.d("AOA", file.getName());
-        Bitmap bmp = BitmapFactory.decodeFile(file.getPath());
-        _image1.setImageBitmap(bmp);
+    public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File f) {
+        final File file = f;
+
+            @Override
+            public void run() {
+                Log.d("AOA", file.getName());
+                Bitmap bmp = BitmapFactory.decodeFile(file.getPath());
+                _image1.setImageBitmap(bmp);
+                try
+                {
+                    // Retrieve storage account from connection-string.
+                    CloudStorageAccount storageAccount = CloudStorageAccount.parse(storageConnectionString);
+
+                    // Create the blob client.
+                    CloudBlobClient blobClient = storageAccount.createCloudBlobClient();
+
+                    // Get a reference to a container.
+                    // The container name must be lower case
+                    CloudBlobContainer container = blobClient.getContainerReference("toyguay-image-container");
+
+
+                    // Create a permissions object.
+                    BlobContainerPermissions containerPermissions = new BlobContainerPermissions();
+
+                    // Include public access in the permissions object.
+                    containerPermissions.setPublicAccess(BlobContainerPublicAccessType.BLOB);
+
+                    // Set the permissions on the container.
+                    container.uploadPermissions(containerPermissions);
+
+                    // Create or overwrite the "myimage.jpg" blob with contents from a local file.
+                    String uniqueID = UUID.randomUUID().toString() + ".jpg";
+                    CloudBlockBlob blob = container.getBlockBlobReference(uniqueID);
+
+                    blob.upload(new FileInputStream(file), file.length());toy.getImageURL().add("https://toyguay.blob.core.windows.net/toyguay-image-container/" + uniqueID);
+                }
+                catch (Exception e)
+                {
+
+                    // Output the stack trace.
+                    e.printStackTrace();
+                }
     }
 
     @Override
