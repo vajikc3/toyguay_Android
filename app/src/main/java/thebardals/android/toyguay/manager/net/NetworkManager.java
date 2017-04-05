@@ -142,7 +142,7 @@ public class NetworkManager {
             @Override
             public void onResponse(String response) {
                 if (listener != null){
-                    ToyEntity toyEntity = parseResponsePostToy(response);
+                    ToyEntityForPost toyEntity = parseResponsePostToy(response);
                     listener.putToySucess(toyEntity.getId());
                 }
             }
@@ -166,8 +166,8 @@ public class NetworkManager {
         };
         queue.add(request);
     }
-    private ToyEntity parseResponsePostToy(String response){
-        ToyEntity result = null;
+    private ToyEntityForPost parseResponsePostToy(String response){
+        ToyEntityForPost result = null;
         try{
             Reader reader = new StringReader(response);
             Gson gson = new GsonBuilder().create();

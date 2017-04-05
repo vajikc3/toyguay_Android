@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class ToyPostResponse {
     @SerializedName("sucess") private boolean sucess;
-    @SerializedName("toy") private ToyEntity toy;
+    @SerializedName("toy") private ToyEntityForPost toy;
 
     public boolean isSucess() {
         return sucess;
     }
 
-    public ToyEntity getToy() {
+    public ToyEntityForPost getToy() {
         return toy;
     }
 
