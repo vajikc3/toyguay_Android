@@ -1,4 +1,4 @@
-package thebardals.toyguay_android;
+package thebardals.domain;
 
 import org.junit.Test;
 

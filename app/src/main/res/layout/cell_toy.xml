@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    >
+
+
+    <ImageView
+        android:id="@+id/cell_toy_image"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        tools:src="@android:drawable/btn_plus"
+        android:scaleType="centerCrop"
+        />
+    <TextView
+        android:id="@+id/cell_toy_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Donec sed odio dui.lore, Donec sed odio dui.lore, Donec sed odio dui.lore"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:maxEms="10"
+        android:layout_below="@id/cell_toy_image"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/cell_toy_price"
+        />
+    <TextView
+        android:id="@+id/cell_toy_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="99.00 $"
+        android:layout_below="@id/cell_toy_image"
+        android:layout_alignParentRight="true"
+        />
+
+
+</RelativeLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="category_values">
+        <item>sports</item>
+        <item>dolls</item>
+        <item>kids</item>
+        <item>builds</item>
+        <item>home</item>
+    </string-array>
+
+
+</resources>
