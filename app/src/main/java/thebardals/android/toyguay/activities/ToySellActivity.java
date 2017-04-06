@@ -9,7 +9,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -119,7 +118,6 @@ public class ToySellActivity  extends AppCompatActivity implements FileChooserDi
 
                     @Override
                     public void data(String id) {
-                        Log.d("AOA", id);
                         toy.setId(id);
 
                         new PutImageToyInteractor().execute(getApplicationContext(), toy.getImageURL().get(0), id, new PutImageToyInteractor.PutImageToyInteractorResponse() {
@@ -167,7 +165,7 @@ public class ToySellActivity  extends AppCompatActivity implements FileChooserDi
             public void sucess(String url) {
                 toy.getImageURL().add(url);
 
-                // After loading blot to Azure we can fill ImageButton with selected image
+                // After loading the blob to Azure we can fill ImageButton with selected image
                 Bitmap bmp = BitmapFactory.decodeFile(file.getPath());
                 _image1.setImageBitmap(bmp);
             }
