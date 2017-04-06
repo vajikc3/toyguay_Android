@@ -104,12 +104,20 @@ public class LoginActivity extends AppCompatActivity {
         token.getTokenFromServer(new IAuthenticate.DownloadTokenFromServer() {
             @Override
             public void getTokenSucess(String token) {
+                progressDialog.dismiss();
                 onLoginSuccess();
             }
 
             @Override
             public void getTokenError() {
+                progressDialog.dismiss();
                 onLoginFailed();
+                /* TODO esto debería hacerse con un navigator */
+                /*
+                Intent intent = new Intent(getApplicationContext(), ToysActivity.class);
+                startActivity(intent);
+                */
+
             }
         });
 

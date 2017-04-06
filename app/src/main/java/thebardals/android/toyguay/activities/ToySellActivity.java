@@ -17,28 +17,19 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
-import com.microsoft.azure.storage.CloudStorageAccount;
-import com.microsoft.azure.storage.blob.BlobContainerPermissions;
-import com.microsoft.azure.storage.blob.BlobContainerPublicAccessType;
-import com.microsoft.azure.storage.blob.CloudBlobClient;
-import com.microsoft.azure.storage.blob.CloudBlobContainer;
-import com.microsoft.azure.storage.blob.CloudBlockBlob;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import thebardals.android.toyguay.R;
 import thebardals.android.toyguay.interactor.PutImageToyInteractor;
 import thebardals.android.toyguay.interactor.PutToyInteractor;
+import thebardals.android.toyguay.interactor.UploadImageToAzureInteractor;
 import thebardals.android.toyguay.model.Toy;
 import thebardals.android.toyguay.util.Constants;
-
-import static thebardals.android.toyguay.util.Constants.AZURE_URL_BASE;
 
 public class ToySellActivity  extends AppCompatActivity implements FileChooserDialog.FileCallback {
 
@@ -71,6 +62,7 @@ public class ToySellActivity  extends AppCompatActivity implements FileChooserDi
         configureSellButton();
         configureImageButton();
 
+        toy = new Toy();
     }
 
     private void setToolbar() {
@@ -101,7 +93,7 @@ public class ToySellActivity  extends AppCompatActivity implements FileChooserDi
             @Override
             public void onClick(View view) {
                 /* Test Toy sell */
-                toy = new Toy();
+
                 toy.setName(_name.getText().toString());
                 toy.setDescription(_description.getText().toString());
                 toy.setPrice(Double.parseDouble(_price.getText().toString()));
@@ -114,6 +106,7 @@ public class ToySellActivity  extends AppCompatActivity implements FileChooserDi
                     public void response(int error) {
                         if (error == Constants.POST_TOY_OK) {
                             /* TODO Mensajito de todo bien */
+
 
                         }
                         if (error== Constants.POST_TOY_ERROR_AUTH){
@@ -128,10 +121,13 @@ public class ToySellActivity  extends AppCompatActivity implements FileChooserDi
                     public void data(String id) {
                         Log.d("AOA", id);
                         toy.setId(id);
+
                         new PutImageToyInteractor().execute(getApplicationContext(), toy.getImageURL().get(0), id, new PutImageToyInteractor.PutImageToyInteractorResponse() {
                             @Override
                             public void PutImageDidFail(int error) {
 
+                                setResult(RESULT_CANCELED);
+                                finish();
                             }
 
                             @Override
@@ -140,6 +136,7 @@ public class ToySellActivity  extends AppCompatActivity implements FileChooserDi
                                 finish();
                             }
                         });
+
                     }
                 });
             }
@@ -163,35 +160,23 @@ public class ToySellActivity  extends AppCompatActivity implements FileChooserDi
     }
 
     @Override
-    public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file) {
+    public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull final File file) {
 
+        new UploadImageToAzureInteractor().execute(file, new UploadImageToAzureInteractor.UploadImageToAzureResponse() {
+            @Override
+            public void sucess(String url) {
+                toy.getImageURL().add(url);
 
-                try
-                {
-                    CloudStorageAccount storageAccount = CloudStorageAccount.parse(Constants.AZURE_STORAGE_CONNECTION_STRING);
+                // After loading blot to Azure we can fill ImageButton with selected image
+                Bitmap bmp = BitmapFactory.decodeFile(file.getPath());
+                _image1.setImageBitmap(bmp);
+            }
 
-                    CloudBlobClient blobClient = storageAccount.createCloudBlobClient();
-                    CloudBlobContainer container = blobClient.getContainerReference(Constants.AZURE_CONTAINER_NAME);
-
-                    BlobContainerPermissions containerPermissions = new BlobContainerPermissions();
-                    containerPermissions.setPublicAccess(BlobContainerPublicAccessType.BLOB);
-                    container.uploadPermissions(containerPermissions);
-
-                    String uniqueID = UUID.randomUUID().toString() + ".jpg";
-                    CloudBlockBlob blob = container.getBlockBlobReference(uniqueID);
-
-                    blob.upload(new FileInputStream(file), file.length());toy.getImageURL().add(AZURE_URL_BASE + uniqueID);
-
-                    // After loading blot to Azure we can fill ImageButton with selected image
-                    Bitmap bmp = BitmapFactory.decodeFile(file.getPath());
-                    _image1.setImageBitmap(bmp);
-                }
-                catch (Exception e)
-                {
-
-                    // Output the stack trace.
-                    e.printStackTrace();
-                }
+            @Override
+            public void didFail() {
+                /* TODO Error uloading image */
+            }
+        });
     }
 
     @Override
